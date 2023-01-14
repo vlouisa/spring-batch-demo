@@ -50,7 +50,7 @@ public class SpringBootBatchConfig {
     public ItemWriter<Movie> itemWriter(Marshaller marshaller) {
         StaxEventItemWriter<Movie> itemWriter = new StaxEventItemWriter<>();
         itemWriter.setMarshaller(marshaller);
-        itemWriter.setRootTagName("movies");
+        itemWriter.setRootTagName("Movies");
         itemWriter.setResource(outputXml);
         return itemWriter;
     }
