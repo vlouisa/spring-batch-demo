@@ -1,17 +1,30 @@
 package dev.louisa.springbatchdemo.dto.mapper;
 
+import dev.louisa.springbatchdemo.dto.outbound.JsonMovieDto;
 import dev.louisa.springbatchdemo.dto.outbound.XmlMovieDto;
 import dev.louisa.springbatchdemo.model.Movie;
 
 public class DtoMapper {
 
-    public static XmlMovieDto map(Movie movie) {
-        XmlMovieDto xmlMovieDto = new XmlMovieDto();
-        xmlMovieDto.setRemark(movie.getRemark());
-        xmlMovieDto.setDirector(movie.getDirector());
-        xmlMovieDto.setTitle(movie.getTitle());
-        xmlMovieDto.setGenre(movie.getGenre());
+    public static XmlMovieDto mapToXml(Movie movie) {
+        XmlMovieDto movieDto = new XmlMovieDto();
+        movieDto.setRemark(movie.getRemark());
+        movieDto.setDirector(movie.getDirector());
+        movieDto.setTitle(movie.getTitle());
+        movieDto.setGenre(movie.getGenre());
         
-        return xmlMovieDto;
+        return movieDto;
     }
+
+    public static JsonMovieDto mapToJson(Movie movie) {
+        JsonMovieDto movieDto = new JsonMovieDto();
+        movieDto.setRemark(movie.getRemark());
+        movieDto.setDirector(movie.getDirector());
+        movieDto.setTitle(movie.getTitle());
+        movieDto.setGenre(movie.getGenre());
+        
+        return movieDto;
+    }
+
+
 }

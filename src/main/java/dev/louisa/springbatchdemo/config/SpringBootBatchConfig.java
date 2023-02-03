@@ -1,5 +1,6 @@
 package dev.louisa.springbatchdemo.config;
 
+import dev.louisa.springbatchdemo.dto.outbound.JsonMovieDto;
 import dev.louisa.springbatchdemo.dto.outbound.XmlMovieDto;
 import dev.louisa.springbatchdemo.model.Movie;
 import org.springframework.batch.core.Job;
@@ -34,13 +35,27 @@ public class SpringBootBatchConfig {
     }
 
     @Bean
-    @Profile({"to-xml"})
+    @Profile({"default", "to-xml"})
     protected Step stepXml(ItemReader<Movie> reader,
                          ItemProcessor<Movie, XmlMovieDto> processor,
                          ItemWriter<XmlMovieDto> writer) {
         return stepBuilderFactory
                 .get("step")
                 .<Movie, XmlMovieDto>chunk(10)
+                .reader(reader)
+                .processor(processor)
+                .writer(writer)
+                .build();
+    }
+
+    @Bean
+    @Profile({"to-json"})
+    protected Step stepJson(ItemReader<Movie> reader,
+                            ItemProcessor<Movie, JsonMovieDto> processor,
+                            ItemWriter<JsonMovieDto> writer) {
+        return stepBuilderFactory
+                .get("step")
+                .<Movie, JsonMovieDto>chunk(10)
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)
