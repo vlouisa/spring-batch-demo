@@ -1,5 +1,6 @@
 package dev.louisa.springbatchdemo.config;
 
+import dev.louisa.springbatchdemo.dto.outbound.XmlMovieDto;
 import dev.louisa.springbatchdemo.model.Movie;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -47,8 +48,8 @@ public class SpringBootBatchConfig {
     }
     
     @Bean
-    public ItemWriter<Movie> itemWriter(Marshaller marshaller) {
-        StaxEventItemWriter<Movie> itemWriter = new StaxEventItemWriter<>();
+    public ItemWriter<XmlMovieDto> itemWriter(Marshaller marshaller) {
+        StaxEventItemWriter<XmlMovieDto> itemWriter = new StaxEventItemWriter<>();
         itemWriter.setMarshaller(marshaller);
         itemWriter.setRootTagName("Movies");
         itemWriter.setResource(outputXml);
@@ -58,17 +59,17 @@ public class SpringBootBatchConfig {
     @Bean
     public Marshaller marshaller() {
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-        marshaller.setClassesToBeBound(Movie.class);
+        marshaller.setClassesToBeBound(XmlMovieDto.class);
         return marshaller;
     }
 
     @Bean
     protected Step step1(ItemReader<Movie> reader,
-                         ItemProcessor<Movie, Movie> processor,
-                         ItemWriter<Movie> writer) {
+                         ItemProcessor<Movie, XmlMovieDto> processor,
+                         ItemWriter<XmlMovieDto> writer) {
         return stepBuilderFactory
                 .get("step1")
-                .<Movie, Movie> chunk(10)
+                .<Movie, XmlMovieDto> chunk(10)
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)
