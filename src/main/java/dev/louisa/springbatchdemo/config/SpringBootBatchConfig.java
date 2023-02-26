@@ -1,7 +1,7 @@
 package dev.louisa.springbatchdemo.config;
 
 import dev.louisa.springbatchdemo.dto.outbound.XmlMovieDto;
-import dev.louisa.springbatchdemo.model.Movie;
+import dev.louisa.springbatchdemo.dto.inbound.MovieDto;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -40,8 +40,8 @@ public class SpringBootBatchConfig {
     }
     
     @Bean
-    public ItemReader<Movie> itemReader() throws UnexpectedInputException, ParseException {
-        FlatFileItemReader<Movie> reader = new FlatFileItemReader<>();
+    public ItemReader<MovieDto> itemReader() throws UnexpectedInputException, ParseException {
+        FlatFileItemReader<MovieDto> reader = new FlatFileItemReader<>();
         reader.setResource(inputCsv);
         reader.setLineMapper(createLineMapper("title", "director", "genre", "remark"));
         return reader;
@@ -64,12 +64,12 @@ public class SpringBootBatchConfig {
     }
 
     @Bean
-    protected Step step1(ItemReader<Movie> reader,
-                         ItemProcessor<Movie, XmlMovieDto> processor,
+    protected Step step1(ItemReader<MovieDto> reader,
+                         ItemProcessor<MovieDto, XmlMovieDto> processor,
                          ItemWriter<XmlMovieDto> writer) {
         return stepBuilderFactory
                 .get("step1")
-                .<Movie, XmlMovieDto> chunk(10)
+                .<MovieDto, XmlMovieDto> chunk(10)
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)

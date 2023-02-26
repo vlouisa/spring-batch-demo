@@ -1,6 +1,6 @@
 package dev.louisa.springbatchdemo.util;
 
-import dev.louisa.springbatchdemo.model.Movie;
+import dev.louisa.springbatchdemo.dto.inbound.MovieDto;
 import dev.louisa.springbatchdemo.service.RecordFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
@@ -14,8 +14,8 @@ public class ItemReaderUtil {
         // This is a util class. This class should never be instantiated.    
     }
 
-    public static DefaultLineMapper<Movie> createLineMapper(String ... tokens) {
-        DefaultLineMapper<Movie> lineMapper = new DefaultLineMapper<>();
+    public static DefaultLineMapper<MovieDto> createLineMapper(String ... tokens) {
+        DefaultLineMapper<MovieDto> lineMapper = new DefaultLineMapper<>();
         lineMapper.setLineTokenizer(createTokenizer(tokens));
         lineMapper.setFieldSetMapper(new RecordFieldSetMapper());
 
