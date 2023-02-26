@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Movie {
+public class MovieDto {
     
     private String title;
     private String director;

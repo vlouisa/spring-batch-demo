@@ -1,6 +1,6 @@
 package dev.louisa.springbatchdemo.config;
 
-import dev.louisa.springbatchdemo.model.Movie;
+import dev.louisa.springbatchdemo.model.MovieDto;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
@@ -18,8 +18,8 @@ public class SpringBootBatchReaderConfig {
     private Resource inputCsv;
 
     @Bean
-    public ItemReader<Movie> itemReader() throws UnexpectedInputException, ParseException {
-        FlatFileItemReader<Movie> reader = new FlatFileItemReader<>();
+    public ItemReader<MovieDto> itemReader() throws UnexpectedInputException, ParseException {
+        FlatFileItemReader<MovieDto> reader = new FlatFileItemReader<>();
         reader.setResource(inputCsv);
         reader.setLineMapper(createLineMapper("title", "director", "genre", "remark"));
         return reader;

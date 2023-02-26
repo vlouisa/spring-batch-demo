@@ -2,7 +2,7 @@ package dev.louisa.springbatchdemo.config;
 
 import dev.louisa.springbatchdemo.dto.outbound.JsonMovieDto;
 import dev.louisa.springbatchdemo.dto.outbound.XmlMovieDto;
-import dev.louisa.springbatchdemo.model.Movie;
+import dev.louisa.springbatchdemo.model.MovieDto;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -36,12 +36,12 @@ public class SpringBootBatchConfig {
 
     @Bean
     @Profile({"default", "to-xml"})
-    protected Step stepXml(ItemReader<Movie> reader,
-                         ItemProcessor<Movie, XmlMovieDto> processor,
+    protected Step stepXml(ItemReader<MovieDto> reader,
+                         ItemProcessor<MovieDto, XmlMovieDto> processor,
                          ItemWriter<XmlMovieDto> writer) {
         return stepBuilderFactory
                 .get("step")
-                .<Movie, XmlMovieDto>chunk(10)
+                .<MovieDto, XmlMovieDto>chunk(10)
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)
@@ -50,12 +50,12 @@ public class SpringBootBatchConfig {
 
     @Bean
     @Profile({"to-json"})
-    protected Step stepJson(ItemReader<Movie> reader,
-                            ItemProcessor<Movie, JsonMovieDto> processor,
+    protected Step stepJson(ItemReader<MovieDto> reader,
+                            ItemProcessor<MovieDto, JsonMovieDto> processor,
                             ItemWriter<JsonMovieDto> writer) {
         return stepBuilderFactory
                 .get("step")
-                .<Movie, JsonMovieDto>chunk(10)
+                .<MovieDto, JsonMovieDto>chunk(10)
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)
