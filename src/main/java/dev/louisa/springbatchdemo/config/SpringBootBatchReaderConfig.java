@@ -19,7 +19,7 @@ public class SpringBootBatchReaderConfig {
 
     @Bean
     public ItemReader<MovieDto> itemReader() throws UnexpectedInputException, ParseException {
-        FlatFileItemReader<MovieDto> reader = new FlatFileItemReader<>();
+        var reader = new FlatFileItemReader<MovieDto>();
         reader.setResource(inputCsv);
         reader.setLineMapper(createLineMapper("title", "director", "genre", "remark"));
         return reader;

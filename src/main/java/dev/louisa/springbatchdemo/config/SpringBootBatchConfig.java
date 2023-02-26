@@ -34,7 +34,7 @@ public class SpringBootBatchConfig {
                 .build();
     }
 
-    @Bean
+    @Bean(destroyMethod = "") // DestroyMethod results in NPE when close() is called on StaxEventItemWriter. Workaround: destroyMethod = ""  
     @Profile({"default", "to-xml"})
     protected Step stepXml(ItemReader<MovieDto> reader,
                          ItemProcessor<MovieDto, XmlMovieDto> processor,

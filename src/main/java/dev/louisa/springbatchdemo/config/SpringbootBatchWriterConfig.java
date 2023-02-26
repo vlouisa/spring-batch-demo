@@ -26,7 +26,7 @@ public class SpringbootBatchWriterConfig {
     @Bean
     @Profile({"default", "to-xml"})
     public ItemWriter<XmlMovieDto> xmlItemWriter(Marshaller marshaller) {
-        StaxEventItemWriter<XmlMovieDto> itemWriter = new StaxEventItemWriter<>();
+        var itemWriter = new StaxEventItemWriter<XmlMovieDto>();
         itemWriter.setMarshaller(marshaller);
         itemWriter.setRootTagName("Movies");
         itemWriter.setResource(outputXml);
@@ -36,7 +36,7 @@ public class SpringbootBatchWriterConfig {
     @Bean
     @Profile({"default", "to-xml"})
     public Marshaller xmlMarshaller() {
-        Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+        var marshaller = new Jaxb2Marshaller();
         marshaller.setClassesToBeBound(XmlMovieDto.class);
         return marshaller;
     }
