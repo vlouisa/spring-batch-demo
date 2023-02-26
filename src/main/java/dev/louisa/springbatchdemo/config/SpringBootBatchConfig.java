@@ -41,15 +41,15 @@ public class SpringBootBatchConfig {
     
     @Bean
     public ItemReader<MovieDto> itemReader() throws UnexpectedInputException, ParseException {
-        FlatFileItemReader<MovieDto> reader = new FlatFileItemReader<>();
+        var reader = new FlatFileItemReader<MovieDto>();
         reader.setResource(inputCsv);
         reader.setLineMapper(createLineMapper("title", "director", "genre", "remark"));
         return reader;
     }
     
-    @Bean
+    @Bean(destroyMethod = "") // DestroyMethod results in NPE when close() is called on StaxEventItemWriter. Workaround: destroyMethod = ""  
     public ItemWriter<XmlMovieDto> itemWriter(Marshaller marshaller) {
-        StaxEventItemWriter<XmlMovieDto> itemWriter = new StaxEventItemWriter<>();
+        var itemWriter = new StaxEventItemWriter<XmlMovieDto>();
         itemWriter.setMarshaller(marshaller);
         itemWriter.setRootTagName("Movies");
         itemWriter.setResource(outputXml);
@@ -58,7 +58,7 @@ public class SpringBootBatchConfig {
 
     @Bean
     public Marshaller marshaller() {
-        Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+        var marshaller = new Jaxb2Marshaller();
         marshaller.setClassesToBeBound(XmlMovieDto.class);
         return marshaller;
     }
